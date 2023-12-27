@@ -1,0 +1,54 @@
+import random
+
+class Quiz:
+    def __init__(self, questions):
+        self.questions = questions
+        self.score = 0
+
+    def ask_question(self, question, options, correct_answer):
+        print(question)
+        for i, option in enumerate(options, start=1):
+            print(f"{i}. {option}")
+
+        user_answer = input("Your answer (enter the corresponding number): ")
+        if user_answer.isdigit() and 1 <= int(user_answer) <= len(options):
+            user_answer = int(user_answer)
+            if options[user_answer - 1] == correct_answer:
+                print("Correct!")
+                self.score += 1
+            else:
+                print(f"Wrong! The correct answer is: {correct_answer}")
+        else:
+            print("Invalid input. Please enter a valid option number.")
+
+    def run_quiz(self):
+        for q in self.questions:
+            self.ask_question(q["question"], q["options"], q["correct_answer"])
+
+    def display_final_score(self):
+        print(f"\nYour final score is: {self.score}/{len(self.questions)}")
+
+if __name__ == "__main__":
+    quiz_questions = [
+        {
+            "question": "What is the capital of France?",
+            "options": ["Berlin", "Madrid", "Paris", "Rome"],
+            "correct_answer": "Paris",
+        },
+        {
+            "question": "Which programming language is this quiz written in?",
+            "options": ["Python", "Java", "C++", "JavaScript"],
+            "correct_answer": "Python",
+        },
+        {
+            "question": "What is the largest planet in our solar system?",
+            "options": ["Mars", "Jupiter", "Venus", "Saturn"],
+            "correct_answer": "Jupiter",
+        },
+    ]
+
+    random.shuffle(quiz_questions)
+
+    quiz = Quiz(quiz_questions)
+    quiz.run_quiz()
+    quiz.display_final_score()
